@@ -1,0 +1,27 @@
+{
+  "name": "js_oop_team_profile_generator",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "test": "tests"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tenues0/JS_OOP_Team_Profile_Generator.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tenues0/JS_OOP_Team_Profile_Generator/issues"
+  },
+  "homepage": "https://github.com/tenues0/JS_OOP_Team_Profile_Generator#readme",
+  "dependencies": {
+    "inquirer": "^8.2.4"
+  }
+}
