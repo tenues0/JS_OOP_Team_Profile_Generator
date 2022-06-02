@@ -22,6 +22,7 @@
   },
   "homepage": "https://github.com/tenues0/JS_OOP_Team_Profile_Generator#readme",
   "dependencies": {
-    "inquirer": "^8.2.4"
+    "inquirer": "^8.2.4",
+    "jest": "^28.1.0"
   }
 }

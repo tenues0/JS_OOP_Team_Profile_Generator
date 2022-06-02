@@ -3,7 +3,7 @@
 // node day 2 time spot 1:37
 
 // node index.js is run
-// 1) program sends out a greeting message
+// 1) program sends out a greeting message - console.log...
 // 2) npm-run-reset will reset the dist/ folder
 // 3) the program first asks for the managers name and starts running the manager class
 // 4) the queston functionality runs like the readme generator project
@@ -15,11 +15,10 @@ const inquirer = require('inquirer');
 const fs = require('fs');
 
 // need to import the classes from the lib/ folder
-const employeeImport = require('./lib/employee');
-const managerImport = require('./lib/manager');
-const engineerImport = require('./lib/engineer');
-const internImport = require('./lib/intern');
-const Manager = require('./lib/manager');
+const Employee = require('./lib/Employee');
+const Engineer = require('./lib/Engineer');
+const Intern = require('./lib/Intern');
+const Manager = require('./lib/Manager');
 
 // the manager questions need to appear first,
 // after that the questions will be based on the next
@@ -114,6 +113,7 @@ const intern = () => {
     ]);
 };
 
+
 const addNewEmployee = () => {
     return inquirer.prompt({
         type: 'list',
@@ -156,3 +156,39 @@ manager().then(ans => {
         });
     }
 })
+
+// function to write to HTML file
+const generateHTML = ({ Employee, Manager, Engineer, Intern }) =>
+  `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+  <title>Team Generator</title>
+</head>
+<body>
+
+
+
+</body>
+</html>`;
+
+
+const init = () => {
+    manager()
+      .then((answers) => fs.writeFileSync('index.html', generateHTML(answers)))
+      .then(() => console.log('Successfully wrote to index.html'))
+      .catch((err) => console.error(err));
+  };
+  
+init();
+
+
+// use init function to get info from all question arrays.
+// create functions for each class. create function to generate the HTML.
+// HTML code to get class info onto webpage
+// how do I get the cards generated for the HTML?
+//      Use a function for each card that needs to be generated:
+//                  manager, engineer, intern
+// will probably need a FOR loop to loop through all the data the user typed in.
