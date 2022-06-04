@@ -2,6 +2,8 @@
 // need to install npm Node Package Manager
 // node day 2 time spot 1:37
 
+// What is the question I am trying to answer?
+
 // node index.js is run
 // 1) program sends out a greeting message - console.log...
 // 2) npm-run-reset will reset the dist/ folder
@@ -120,6 +122,9 @@ let engineer = () => {
         }
         if (eresponse.addNewEmployee == 'No') {
             console.log("run the function to create HTML.");
+            // The thePeopleWhoWorkHere[] array needs to be passed 
+            // into the function as it is called.
+            generateHTML(thePeopleWhoWorkHere);
         }
     });
 };
@@ -163,6 +168,9 @@ let intern = () => {
         }
         if (iresponse.addNewEmployee == 'No') {
             console.log("run the function to create HTML.");
+            // The thePeopleWhoWorkHere[] array needs to be passed 
+            // into the function as it is called.
+            generateHTML(thePeopleWhoWorkHere);
         }
     });
 };
@@ -189,62 +197,90 @@ let addNewEmployee = () => {
 // run the manager function to start the program
 manager();
 
+
+
+
 // function to write to HTML file
 // this function can be put into another file later
-function generateHTML(params) {
-    let template = 
-    `<!DOCTYPE html>
-    <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-        <link rel="stylesheet" href="./reset.css">
-        <link rel="stylesheet" href="./style.css">
-        <title>Team Profile Generator</title>
-    </head>
-    <body>
+function generateHTML(thePeopleWhoWorkHere) {
+    fs.writeFileSync('./dist/index.html', 
+`
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="./reset.css">
+    <link rel="stylesheet" href="./style.css">
+    <title>Team Profile Generator</title>
+</head>
+<body>
 
     <header>
         <div>
-            <h1>Base HTML template page</h1>
+        <h1>Base HTML template page</h1>
         </div>
     </header>
 
     <main>
-    `;  
-
-    template += `
-
 
         <section>
             <div class="card" style="width: 18rem;">
                 <div class="card-body">
-                  <p class="card-text">${params[0].ans.identification}</p>
+                  <p class="card-text">${thePeopleWhoWorkHere[0].getRole()}</p>
+                  <p class="card-text">${thePeopleWhoWorkHere[0].getName()}</p>
                 </div>
               </div>
         </section>
 
     </main>
-
-    </body>
+    
+</body>
 </html>
-    `;
+`
+);
+    console.log('Successfully wrote to index.html');
 }
 
+//     let template = 
+//     `<!DOCTYPE html>
+//     <html lang="en">
+//     <head>
+//         <meta charset="UTF-8">
+//         <meta http-equiv="X-UA-Compatible" content="IE=edge">
+//         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+//         <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+//         <link rel="stylesheet" href="./reset.css">
+//         <link rel="stylesheet" href="./style.css">
+//         <title>Team Profile Generator</title>
+//     </head>
+//     <body>
+
+//     <header>
+//         <div>
+//             <h1>Base HTML template page</h1>
+//         </div>
+//     </header>
+
+//     <main>
+//     `;  
+
+//     // call template by using the code ${template}
+//     template += `
 
 
-// fs.writeFileSync('index.html', generateHTML(thePeopleWhoWorkHere));
-// console.log('Successfully wrote to index.html');
+//         <section>
+//             <div class="card" style="width: 18rem;">
+//                 <div class="card-body">
+//                   <p class="card-text">${params[0].ans.identification}</p>
+//                 </div>
+//               </div>
+//         </section>
 
+//     </main>
 
-
-
-
-// What is the question I am trying to answer?
-
-
-// HTML code to get class info onto webpage
-// how do I get the cards generated for the HTML?
-// will probably need a FOR loop to loop through all the data the user typed in.
+//     </body>
+// </html>
+//     `;
