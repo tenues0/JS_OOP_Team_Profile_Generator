@@ -20,15 +20,12 @@ const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 const Manager = require('./lib/Manager');
 
-// the manager questions need to appear first,
-// after that the questions will be based on the next
-// role the user wants to add to the teamlist.
+// this is an array that will store all the Employee objects created
+const thePeopleWhoWorkHere = [];
 
-// want the questions to populate the fields contained 
-// within the objects.
-
-const manager = () => {
-    return inquirer.prompt([
+// function for the manager entry
+let manager = () => {
+    inquirer.prompt([
         {
             type: 'input',
             name: 'Managername',  // the varible from one of the classes
@@ -45,18 +42,48 @@ const manager = () => {
             message: 'What is this person\'s email?',
         },
         {
+            type: 'input',
+            name: 'officenumber',
+            message: 'What is the manager\'s office number?',
+        },
+        {
             type: 'list',
             name: 'nextEmployee',
             message: 'What is the role of the next employee?',
             choices: ['Intern', 'Engineer'],
         },
-    ]);
+    ]).then(ans => {
+        // the code below creates an object with the Manager class
+        let manager = new Manager(ans.Managername, ans.identification, ans.emailaddress, ans.officenumber);
+        console.log("The manager's info entered is: ", manager);
+        // adding the new manager to the array
+        thePeopleWhoWorkHere.push(manager);
+        console.log("thePeopleWhoWorkHere ", thePeopleWhoWorkHere);
+        // the code below runs the addNewEmployee() function to add
+        // additional engineers and interns
+        if (ans.nextEmployee === 'Engineer') {
+            engineer();
+            // .then(engAns => {
+            //     if (engAns.addNewEmployee == 'Yes') {
+            //         addNewEmployee();
+            //     }
+            // });
+        }
+        if (ans.nextEmployee === 'Intern') {
+            intern();
+            // .then(intAns => {
+            //     if (intAns.addNewEmployee == 'Yes') {
+            //         addNewEmployee();
+            //     }
+            // });
+        }
+    });
 
 };
 
 // function for engineer entries
-const engineer = () => {
-    return inquirer.prompt([
+let engineer = () => {
+    inquirer.prompt([
         {
             type: 'input',
             name: 'Engineername',
@@ -73,17 +100,33 @@ const engineer = () => {
             message: 'What is this person\'s email?',
         },
         {
+            type: 'input',
+            name: 'Engineergithub',
+            message: 'What is this person\'s GitHub username?',
+        },
+        {
             type: 'list',
             name: 'addNewEmployee',
             message: 'Would you like to add another employee?',
             choices: ['Yes', 'No'],
         },
-    ]);
+    ]).then(eresponse => {
+        let engineer = new Engineer(eresponse.Engineername, eresponse.Engineeridentification, eresponse.Engineeremailaddress, eresponse.Engineergithub);
+        console.log("The engineer's info entered is: ", engineer);
+        thePeopleWhoWorkHere.push(engineer);
+        console.log("thePeopleWhoWorkHere ", thePeopleWhoWorkHere);
+        if (eresponse.addNewEmployee == 'Yes') {
+            addNewEmployee();
+        }
+        if (eresponse.addNewEmployee == 'No') {
+            console.log("run the function to create HTML.");
+        }
+    });
 };
 
 // function for intern entries
-const intern = () => {
-    return inquirer.prompt([
+let intern = () => {
+    inquirer.prompt([
         {
             type: 'input',
             name: 'internname',
@@ -110,12 +153,23 @@ const intern = () => {
             message: 'Would you like to add another employee?',
             choices: ['Yes', 'No'],
         },
-    ]);
+    ]).then(iresponse => {
+        let intern = new Intern(iresponse.internname, iresponse.internidentification, iresponse.internemailaddress, iresponse.school);
+        console.log("The intern's info entered is: ", intern);
+        thePeopleWhoWorkHere.push(intern);
+        console.log("thePeopleWhoWorkHere ", thePeopleWhoWorkHere);
+        if (iresponse.addNewEmployee == 'Yes') {
+            addNewEmployee();
+        }
+        if (iresponse.addNewEmployee == 'No') {
+            console.log("run the function to create HTML.");
+        }
+    });
 };
 
-
-const addNewEmployee = () => {
-    return inquirer.prompt({
+// this function runs until the user is done adding entries
+let addNewEmployee = () => {
+    inquirer.prompt({
         type: 'list',
         name: 'nextEmployee',
         message: 'What is the role of the next employee?',
@@ -123,72 +177,74 @@ const addNewEmployee = () => {
     },
 ).then(newEmpAns => {
     if (newEmpAns.nextEmployee === 'Engineer') {
-        engineer().then(engAns => {
-            if (engAns.addNewEmployee === 'Yes') {
-                addNewEmployee();
-            }
-        });
+        engineer();
     }
     if (newEmpAns.nextEmployee === 'Intern') {
-        intern().then(intAns => {
-            if (intAns.addNewEmployee === 'Yes') {
-                addNewEmployee();
-            }
-        });
+        intern();
     }
 });
-};
+}
 
-// function is only used once
-manager().then(ans => {
-    if (ans.nextEmployee === 'Engineer') {
-        engineer().then(engAns => {
-            if (engAns.addNewEmployee == 'Yes') {
-                addNewEmployee();
-            }
-        });
-    }
-    if (ans.nextEmployee === 'Intern') {
-        intern().then(intAns => {
-            if (intAns.addNewEmployee == 'Yes') {
-                addNewEmployee();
-            }
-        });
-    }
-})
+
+// run the manager function to start the program
+manager();
 
 // function to write to HTML file
-const generateHTML = ({ Employee, Manager, Engineer, Intern }) =>
-  `<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-  <title>Team Generator</title>
-</head>
-<body>
+// this function can be put into another file later
+function generateHTML(params) {
+    let template = 
+    `<!DOCTYPE html>
+    <html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+        <link rel="stylesheet" href="./reset.css">
+        <link rel="stylesheet" href="./style.css">
+        <title>Team Profile Generator</title>
+    </head>
+    <body>
+
+    <header>
+        <div>
+            <h1>Base HTML template page</h1>
+        </div>
+    </header>
+
+    <main>
+    `;  
+
+    template += `
+
+
+        <section>
+            <div class="card" style="width: 18rem;">
+                <div class="card-body">
+                  <p class="card-text">${params[0].ans.identification}</p>
+                </div>
+              </div>
+        </section>
+
+    </main>
+
+    </body>
+</html>
+    `;
+}
 
 
 
-</body>
-</html>`;
+// fs.writeFileSync('index.html', generateHTML(thePeopleWhoWorkHere));
+// console.log('Successfully wrote to index.html');
 
 
-const init = () => {
-    manager()
-      .then((answers) => fs.writeFileSync('index.html', generateHTML(answers)))
-      .then(() => console.log('Successfully wrote to index.html'))
-      .catch((err) => console.error(err));
-  };
-  
-init();
 
 
-// use init function to get info from all question arrays.
-// create functions for each class. create function to generate the HTML.
+
+// What is the question I am trying to answer?
+
+
 // HTML code to get class info onto webpage
 // how do I get the cards generated for the HTML?
-//      Use a function for each card that needs to be generated:
-//                  manager, engineer, intern
 // will probably need a FOR loop to loop through all the data the user typed in.
