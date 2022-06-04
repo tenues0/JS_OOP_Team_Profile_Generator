@@ -1,15 +1,15 @@
-// instructor demo on May 21 video time: 2:21:40
-// need to install npm Node Package Manager
-// node day 2 time spot 1:37
-
 // What is the question I am trying to answer?
 
 // node index.js is run
-// 1) program sends out a greeting message - console.log...
-// 2) npm-run-reset will reset the dist/ folder
-// 3) the program first asks for the managers name and starts running the manager class
-// 4) the queston functionality runs like the readme generator project
-// 5) for the classes, the employee class is the parent class, the other classes (manager, engineer, intern) are child classes
+// 1) npm-run-reset will reset the dist/ folder
+// 2) the program first asks for the managers name and starts running the manager class
+// 3) the queston functionality runs like the readme generator project
+// 4) for the classes, the employee class is the parent class, the other classes (manager, engineer, intern) are child classes
+// 5) an HTML file is generated that includes all the cards created
+
+// to-do list:
+// 1) npm-run-reset erases the HTML file
+// 2) craete tests for all the classes
 
 // need inquirer package for questions
 const inquirer = require('inquirer');
