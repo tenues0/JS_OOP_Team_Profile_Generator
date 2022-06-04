@@ -10,10 +10,6 @@ describe('Employee class', () => {
         // first need to create an employee
         const employee = new Employee('teddy', 1, 'theodore.ayoub@gmail.com');
 
-        // using expect(), test the constructor consisting of
-        // the name, id, and email
-
-        // do I check for the entire object or do I check each piece?
         // using expect to check the name
         expect(employee.name).toBe(
             // expect.arrayContaining([expect.objectContaining({ name: 'teddy' })])

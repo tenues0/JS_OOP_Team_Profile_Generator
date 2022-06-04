@@ -1,15 +1,10 @@
 // What is the question I am trying to answer?
 
 // node index.js is run
-// 1) npm-run-reset will reset the dist/ folder
-// 2) the program first asks for the managers name and starts running the manager class
-// 3) the queston functionality runs like the readme generator project
-// 4) for the classes, the employee class is the parent class, the other classes (manager, engineer, intern) are child classes
-// 5) an HTML file is generated that includes all the cards created
-
-// to-do list:
-// 1) npm-run-reset erases the HTML file
-// 2) craete tests for all the classes
+// 1) the program first asks for the managers name and starts running the manager class
+// 2) the queston functionality runs like the readme generator project
+// 3) for the classes, the employee class is the parent class, the other classes (manager, engineer, intern) are child classes
+// 4) an HTML file is generated that includes all the cards created
 
 // need inquirer package for questions
 const inquirer = require('inquirer');
