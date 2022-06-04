@@ -52,7 +52,7 @@ let manager = () => {
             type: 'list',
             name: 'nextEmployee',
             message: 'What is the role of the next employee?',
-            choices: ['Intern', 'Engineer'],
+            choices: ['Engineer', 'Intern'],
         },
     ]).then(ans => {
         // the code below creates an object with the Manager class
@@ -193,7 +193,6 @@ let addNewEmployee = () => {
 });
 }
 
-
 // run the manager function to start the program
 manager();
 
@@ -202,8 +201,39 @@ manager();
 
 // function to write to HTML file
 // this function can be put into another file later
-function generateHTML(thePeopleWhoWorkHere) {
-    fs.writeFileSync('./dist/index.html', 
+function generateHTML() { 
+
+// an empty string that will store all the employee cards generated.
+let employeeTemplate = "";
+
+for (let index = 0; index < thePeopleWhoWorkHere.length; index++) {
+    switch (thePeopleWhoWorkHere[index].getRole()) {
+        case "Manager":
+            otherInfo = thePeopleWhoWorkHere[index].getOfficeNumber();
+            break;
+        case "Engineer":
+            otherInfo = thePeopleWhoWorkHere[index].getGithub();
+            break;
+        case "Intern":
+            otherInfo = thePeopleWhoWorkHere[index].getSchool();
+            break;
+    };
+
+// the employee card template
+employeeTemplate = employeeTemplate + `
+                <div class="card" style="width: 18rem;">
+                    <div class="card-body">
+                    <p class="card-text">${thePeopleWhoWorkHere[index].getRole()}</p>
+                    <p class="card-text">${thePeopleWhoWorkHere[index].getName()}</p>
+                    <p class="card-text">${thePeopleWhoWorkHere[index].getId()}</p>
+                    <p class="card-text">${thePeopleWhoWorkHere[index].getEmail()}</p>
+                    <p class="card-text">${otherInfo}</p>
+                    </div>
+                </div>
+`
+};
+
+const htmlDoc = 
 `
 <!DOCTYPE html>
 <html lang="en">
@@ -227,12 +257,7 @@ function generateHTML(thePeopleWhoWorkHere) {
     <main>
 
         <section>
-            <div class="card" style="width: 18rem;">
-                <div class="card-body">
-                  <p class="card-text">${thePeopleWhoWorkHere[0].getRole()}</p>
-                  <p class="card-text">${thePeopleWhoWorkHere[0].getName()}</p>
-                </div>
-              </div>
+            ${employeeTemplate}
         </section>
 
     </main>
@@ -240,47 +265,7 @@ function generateHTML(thePeopleWhoWorkHere) {
 </body>
 </html>
 `
-);
-    console.log('Successfully wrote to index.html');
-}
-
-//     let template = 
-//     `<!DOCTYPE html>
-//     <html lang="en">
-//     <head>
-//         <meta charset="UTF-8">
-//         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-//         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-//         <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-//         <link rel="stylesheet" href="./reset.css">
-//         <link rel="stylesheet" href="./style.css">
-//         <title>Team Profile Generator</title>
-//     </head>
-//     <body>
-
-//     <header>
-//         <div>
-//             <h1>Base HTML template page</h1>
-//         </div>
-//     </header>
-
-//     <main>
-//     `;  
-
-//     // call template by using the code ${template}
-//     template += `
-
-
-//         <section>
-//             <div class="card" style="width: 18rem;">
-//                 <div class="card-body">
-//                   <p class="card-text">${params[0].ans.identification}</p>
-//                 </div>
-//               </div>
-//         </section>
-
-//     </main>
-
-//     </body>
-// </html>
-//     `;
+// writing the HTML string to the HTML file.
+fs.writeFileSync('./dist/index.html', htmlDoc);
+console.log('Successfully wrote to index.html');
+};
