@@ -204,25 +204,33 @@ let employeeTemplate = "";
 for (let index = 0; index < thePeopleWhoWorkHere.length; index++) {
     switch (thePeopleWhoWorkHere[index].getRole()) {
         case "Manager":
+            roleIcon = `<i class="fa-solid fa-mug-hot"></i>`;
             otherInfo = thePeopleWhoWorkHere[index].getOfficeNumber();
+            otherInfoName = `Office Number:`;
             break;
         case "Engineer":
+            roleIcon = `<i class="fa-solid fa-wrench"></i>`;
             otherInfo = thePeopleWhoWorkHere[index].getGithub();
+            otherInfoName = `GitHub:`;
             break;
         case "Intern":
+            roleIcon = `<i class="fa-solid fa-graduation-cap"></i>`;
             otherInfo = thePeopleWhoWorkHere[index].getSchool();
+            otherInfoName = `School:`;
             break;
     };
 
+// website that has the icons for the roles
+// https://fontawesome.com/icons
 // the employee card template
 employeeTemplate = employeeTemplate + `
                 <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
-                <div class="card-header">${thePeopleWhoWorkHere[index].getRole()}</div>
+                <div class="card-header">${roleIcon} ${thePeopleWhoWorkHere[index].getRole()}</div>
                 <div class="card-body">
                     <h5 class="card-title">${thePeopleWhoWorkHere[index].getName()}</h5>
                     <p class="card-text">${thePeopleWhoWorkHere[index].getId()}</p>
                     <p class="card-text">${thePeopleWhoWorkHere[index].getEmail()}</p>
-                    <p class="card-text">${otherInfo}</p>
+                    <p class="card-text">${otherInfoName} ${otherInfo}</p>
                 </div>
                 </div>
 `
@@ -239,6 +247,7 @@ const htmlDoc =
     <link  rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="./reset.css">
     <link rel="stylesheet" href="./style.css">
+    <script src="https://kit.fontawesome.com/1ee84a7adc.js" crossorigin="anonymous"></script>
     <title>Team Profile Generator</title>
 </head>
 <body>
