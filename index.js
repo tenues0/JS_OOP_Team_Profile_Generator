@@ -216,14 +216,14 @@ for (let index = 0; index < thePeopleWhoWorkHere.length; index++) {
 
 // the employee card template
 employeeTemplate = employeeTemplate + `
-                <div class="card" style="width: 18rem;">
-                    <div class="card-body">
-                    <p class="card-text">${thePeopleWhoWorkHere[index].getRole()}</p>
-                    <p class="card-text">${thePeopleWhoWorkHere[index].getName()}</p>
+                <div class="card text-white bg-info mb-3" style="max-width: 18rem;">
+                <div class="card-header">${thePeopleWhoWorkHere[index].getRole()}</div>
+                <div class="card-body">
+                    <h5 class="card-title">${thePeopleWhoWorkHere[index].getName()}</h5>
                     <p class="card-text">${thePeopleWhoWorkHere[index].getId()}</p>
                     <p class="card-text">${thePeopleWhoWorkHere[index].getEmail()}</p>
                     <p class="card-text">${otherInfo}</p>
-                    </div>
+                </div>
                 </div>
 `
 };
@@ -251,7 +251,7 @@ const htmlDoc =
 
     <main>
 
-        <section>
+        <section class="employee-cards">
             ${employeeTemplate}
         </section>
 
